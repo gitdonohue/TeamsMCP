@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TeamsMCP (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TeamsMCP (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

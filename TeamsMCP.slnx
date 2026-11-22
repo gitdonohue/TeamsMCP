@@ -1,0 +1,17 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/src/">
+    <Project Path="src/TeamsMCP.Core/TeamsMCP.Core.csproj" />
+    <Project Path="src/TeamsMCP/TeamsMCP.csproj">
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TeamsMCP.Tests/TeamsMCP.Tests.csproj" />
+  </Folder>
+</Solution>

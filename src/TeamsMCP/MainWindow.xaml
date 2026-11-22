@@ -1,0 +1,269 @@
+<Window
+    x:Class="TeamsMCP.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="TeamsMCP — Microsoft Teams MCP Server">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Padding="24" Spacing="16" MaxWidth="720" HorizontalAlignment="Stretch">
+
+                <!-- Header -->
+                <StackPanel Spacing="4">
+                    <TextBlock Text="TeamsMCP" Style="{StaticResource TitleTextBlockStyle}" />
+                    <TextBlock Text="Local Model Context Protocol (MCP) server for Microsoft Teams via Microsoft Graph."
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+
+                <!-- Status Card -->
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16">
+                    <StackPanel Spacing="12">
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Ellipse x:Name="StatusDot"
+                                     Width="12" Height="12"
+                                     VerticalAlignment="Center"
+                                     Fill="#9AA0A6" />
+
+                            <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center">
+                                <TextBlock x:Name="StatusTitleText"
+                                           Text="Stopped"
+                                           Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                <TextBlock x:Name="StatusDetailText"
+                                           Text="Configure your Entra Client ID and start the server."
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
+
+                            <Button x:Name="ToggleServerButton"
+                                    Grid.Column="2"
+                                    Content="Start Server"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Click="ToggleServerButton_Click"
+                                    VerticalAlignment="Center" />
+                        </Grid>
+
+                        <StackPanel x:Name="EndpointRow" Orientation="Horizontal" Spacing="8" Visibility="Collapsed">
+                            <TextBlock x:Name="EndpointText"
+                                       VerticalAlignment="Center"
+                                       IsTextSelectionEnabled="True"
+                                       FontFamily="Consolas" />
+                            <Button x:Name="CopyEndpointButton"
+                                    Content="Copy URL"
+                                    Click="CopyEndpointButton_Click" />
+                        </StackPanel>
+
+                        <TextBlock x:Name="AccountStatusText"
+                                   Visibility="Collapsed"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                   TextWrapping="Wrap" />
+
+                        <!-- Device code prompt -->
+                        <Border x:Name="DeviceCodeCard"
+                                Visibility="Collapsed"
+                                Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                                BorderBrush="{ThemeResource AccentFillColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Padding="12">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Complete Microsoft Sign-In"
+                                           Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                <TextBlock x:Name="DeviceCodeMessageText"
+                                           TextWrapping="Wrap"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <TextBlock x:Name="DeviceCodeValueText"
+                                               FontSize="22"
+                                               FontWeight="Bold"
+                                               FontFamily="Consolas"
+                                               IsTextSelectionEnabled="True"
+                                               VerticalAlignment="Center" />
+                                    <Button x:Name="CopyCodeButton"
+                                            Content="Copy Code"
+                                            Click="CopyCodeButton_Click" />
+                                    <Button x:Name="OpenSignInButton"
+                                            Content="Open Sign-In Page"
+                                            Click="OpenSignInButton_Click" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Microsoft Entra & Authentication -->
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Microsoft Entra &amp; Authentication"
+                                   Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                        <TextBox x:Name="ClientIdBox"
+                                 Header="Application (Client) ID"
+                                 PlaceholderText="00000000-0000-0000-0000-000000000000"
+                                 TextChanged="SettingControl_Changed" />
+
+                        <TextBox x:Name="TenantIdBox"
+                                 Header="Directory (Tenant) ID (optional)"
+                                 PlaceholderText="Leave empty for 'organizations'"
+                                 TextChanged="SettingControl_Changed" />
+
+                        <ToggleSwitch x:Name="DeviceCodeSwitch"
+                                      Header="Sign-in mode"
+                                      OnContent="Device code (Client ID only; persisted encrypted cache)"
+                                      OffContent="Windows Broker (interactive OS account sign-in)"
+                                      IsOn="True"
+                                      Toggled="SettingControl_Changed" />
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="RefreshTokenButton"
+                                    Content="Refresh Token"
+                                    IsEnabled="False"
+                                    Click="RefreshTokenButton_Click" />
+                            <Button x:Name="NewTokenButton"
+                                    Content="Acquire New Token"
+                                    IsEnabled="False"
+                                    Click="NewTokenButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Server & Permissions -->
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Server &amp; Permissions"
+                                   Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                        <NumberBox x:Name="PortBox"
+                                   Header="Loopback Port (127.0.0.1 only)"
+                                   Value="5123"
+                                   Minimum="1024"
+                                   Maximum="65535"
+                                   SpinButtonPlacementMode="Compact"
+                                   ValueChanged="PortBox_ValueChanged" />
+
+                        <ToggleSwitch x:Name="AllowPostingSwitch"
+                                      Header="Allow posting channel messages (send_channel_message)"
+                                      OnContent="Enabled (requires ChannelMessage.Send consent)"
+                                      OffContent="Disabled (read-only mode)"
+                                      IsOn="True"
+                                      Toggled="AllowPostingSwitch_Toggled" />
+
+                        <ToggleSwitch x:Name="EnableImageSaveSwitch"
+                                      Header="Allow saving Teams inline images to a local folder"
+                                      OnContent="Enabled"
+                                      OffContent="Disabled"
+                                      IsOn="True"
+                                      Toggled="SettingControl_Changed" />
+
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="ImageSaveDirBox"
+                                     Header="Image save folder"
+                                     TextChanged="SettingControl_Changed" />
+                            <Button x:Name="BrowseImageDirButton"
+                                    Grid.Column="1"
+                                    Content="Browse..."
+                                    VerticalAlignment="Bottom"
+                                    Click="BrowseImageDirButton_Click" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Startup & System Tray -->
+                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16,12">
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Startup &amp; System Tray"
+                                   Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                        <Grid ColumnSpacing="16" RowSpacing="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <CheckBox x:Name="AutoStartServerCheckBox"
+                                      Grid.Row="0" Grid.Column="0"
+                                      Content="Auto-start server on launch"
+                                      ToolTipService.ToolTip="Start MCP server automatically when TeamsMCP launches"
+                                      Click="SettingControl_Changed" />
+
+                            <CheckBox x:Name="StartMinimizedCheckBox"
+                                      Grid.Row="0" Grid.Column="1"
+                                      Content="Start minimized to tray"
+                                      ToolTipService.ToolTip="Start minimized to the system tray"
+                                      Click="SettingControl_Changed" />
+
+                            <CheckBox x:Name="MinimizeOnCloseCheckBox"
+                                      Grid.Row="1" Grid.Column="0"
+                                      Content="Minimize to tray on close"
+                                      ToolTipService.ToolTip="Minimize to system tray when closing this window"
+                                      IsChecked="True"
+                                      Click="SettingControl_Changed" />
+
+                            <CheckBox x:Name="LaunchAtSignInCheckBox"
+                                      Grid.Row="1" Grid.Column="1"
+                                      Content="Launch at Windows sign-in"
+                                      ToolTipService.ToolTip="Launch TeamsMCP when signing in to Windows"
+                                      Click="LaunchAtSignInCheckBox_Click" />
+                        </Grid>
+
+                        <TextBlock x:Name="StartupTaskNoteText"
+                                   Visibility="Collapsed"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                   FontSize="12"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+
+                <!-- MCP Client Configuration Snippet -->
+                <Expander Header="MCP Client Configuration (VS Code, Copilot CLI, Claude Desktop)"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="8" Padding="0,8,0,0">
+                        <TextBlock Text="Point your MCP client at the local Streamable HTTP endpoint:"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                   TextWrapping="Wrap" />
+                        <TextBox x:Name="ClientConfigBox"
+                                 IsReadOnly="True"
+                                 AcceptsReturn="True"
+                                 FontFamily="Consolas"
+                                 TextWrapping="NoWrap" />
+                        <Button x:Name="CopyConfigButton"
+                                Content="Copy JSON Configuration"
+                                Click="CopyConfigButton_Click" />
+                    </StackPanel>
+                </Expander>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
