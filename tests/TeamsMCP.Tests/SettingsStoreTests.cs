@@ -42,7 +42,7 @@ public sealed class SettingsStoreTests : IDisposable
 		var loaded = new SettingsStore(path).Load();
 
 		Assert.Equal(AppSettings.DefaultPort, loaded.Port);
-		Assert.Equal(string.Empty, loaded.ClientId);
+		Assert.Equal(AppSettings.DefaultClientId, loaded.ClientId);
 		Assert.True(loaded.AllowChannelPosting);
 	}
 

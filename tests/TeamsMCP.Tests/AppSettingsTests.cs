@@ -10,6 +10,7 @@ public sealed class AppSettingsTests
 	{
 		var settings = new AppSettings();
 		Assert.True(settings.AllowChannelPosting);
+		Assert.Equal(AppSettings.DefaultClientId, settings.ClientId);
 	}
 
 	[Fact]

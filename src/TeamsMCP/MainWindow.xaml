@@ -40,7 +40,7 @@
                                            Text="Stopped"
                                            Style="{StaticResource BodyStrongTextBlockStyle}" />
                                 <TextBlock x:Name="StatusDetailText"
-                                           Text="Configure your Entra Client ID and start the server."
+                                           Text="Click Start Server to sign in and start the local MCP endpoint."
                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                            TextWrapping="Wrap" />
                             </StackPanel>
@@ -113,7 +113,7 @@
 
                         <TextBox x:Name="ClientIdBox"
                                  Header="Application (Client) ID"
-                                 PlaceholderText="00000000-0000-0000-0000-000000000000"
+                                 PlaceholderText="508ef684-c0c8-4101-8e76-c4046af418fe"
                                  TextChanged="SettingControl_Changed" />
 
                         <TextBox x:Name="TenantIdBox"

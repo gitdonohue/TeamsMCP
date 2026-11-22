@@ -33,15 +33,6 @@
     <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
-  <Import Project="LocalDev.props" Condition="'$(Configuration)' == 'Debug' and Exists('LocalDev.props')" />
-
-  <ItemGroup Condition="'$(Configuration)' == 'Debug' and '$(LocalDebugClientId)' != ''">
-    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
-      <_Parameter1>LocalDebugClientId</_Parameter1>
-      <_Parameter2>$(LocalDebugClientId)</_Parameter2>
-    </AssemblyAttribute>
-  </ItemGroup>
-
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

@@ -24,11 +24,37 @@ TeamsMCP runs a local **Model Context Protocol (MCP)** server on your machine (`
 
 - **Windows 10 (1809+) or Windows 11** (`x64` or `ARM64`).
 - A **Microsoft 365 work or school account** with access to Microsoft Teams.
-- A **Microsoft Entra ID Application (Client) ID** (either created in your organization's Microsoft Entra admin center or provided by your IT administrator).
 
-### 2. Set Up a Microsoft Entra App Registration
+### 2. Start TeamsMCP and Sign In
 
-If you don't already have a Client ID from your IT team:
+1. Launch **TeamsMCP**.
+2. TeamsMCP is pre-configured with a default **Application (Client) ID**—you can start right away, or replace it with your own organization's Client ID and optional Tenant ID.
+3. Choose your preferred **Sign-in mode**:
+   - **Device code** *(default)* — Signs in via your browser using a short code and saves an encrypted session locally so you don't have to sign in every time.
+   - **Windows Broker** — Uses your Windows account sign-in dialog.
+4. Click **Start Server**.
+5. When prompted, complete the Microsoft sign-in flow. Once signed in, the status indicator turns green and displays your local MCP URL (default: `http://127.0.0.1:5123/mcp`).
+
+### 3. Connect Your AI Assistant
+
+Expand **MCP Client Configuration** at the bottom of the TeamsMCP window and click **Copy JSON Configuration**, then paste it into your MCP client's configuration file (VS Code, GitHub Copilot CLI, Claude Desktop, etc.):
+
+```json
+{
+  "mcpServers": {
+    "teams-mcp": {
+      "type": "http",
+      "url": "http://127.0.0.1:5123/mcp"
+    }
+  }
+}
+```
+
+*(If you change the loopback port in TeamsMCP, the snippet updates automatically.)*
+
+### Using Your Own Microsoft Entra App Registration (Optional)
+
+If your organization requires you to use an internal app registration instead of the built-in Client ID:
 
 1. Open the [Microsoft Entra admin center](https://entra.microsoft.com) → **App registrations** → **New registration**.
 2. Give it a name (for example, `TeamsMCP`) and click **Register**.
@@ -46,33 +72,7 @@ If you don't already have a Client ID from your IT team:
    - `Files.Read.All`
    - `ChannelMessage.Send` *(required for posting messages to channels; optional if you switch to read-only mode)*
 6. If your organization requires admin approval for Teams scopes, ask an Entra administrator to click **Grant admin consent**.
-
-### 3. Configure and Start TeamsMCP
-
-1. Launch **TeamsMCP**.
-2. Paste your **Application (Client) ID** (and optional **Directory (Tenant) ID**—leave blank to use `organizations`).
-3. Choose your preferred **Sign-in mode**:
-   - **Device code** *(default)* — Signs in via your browser using a short code and saves an encrypted session locally so you don't have to sign in every time.
-   - **Windows Broker** — Uses your Windows account sign-in dialog.
-4. Click **Start Server**.
-5. When prompted, complete the Microsoft sign-in flow. Once signed in, the status indicator turns green and displays your local MCP URL (default: `http://127.0.0.1:5123/mcp`).
-
-### 4. Connect Your AI Assistant
-
-Expand **MCP Client Configuration** at the bottom of the TeamsMCP window and click **Copy JSON Configuration**, then paste it into your MCP client's configuration file (VS Code, GitHub Copilot CLI, Claude Desktop, etc.):
-
-```json
-{
-  "mcpServers": {
-    "teams-mcp": {
-      "type": "http",
-      "url": "http://127.0.0.1:5123/mcp"
-    }
-  }
-}
-```
-
-*(If you change the loopback port in TeamsMCP, the snippet updates automatically.)*
+7. Paste your **Application (Client) ID** (and optional **Directory (Tenant) ID**) into TeamsMCP.
 
 ---
 

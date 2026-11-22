@@ -1,6 +1,3 @@
-#if DEBUG
-using System.Reflection;
-#endif
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -47,13 +44,6 @@ public sealed partial class MainWindow : Window
 		appWindow.Closing += AppWindow_Closing;
 
 		currentSettings = settingsStore.Load();
-#if DEBUG
-		if (string.IsNullOrWhiteSpace(currentSettings.ClientId) &&
-			GetLocalDebugClientId() is { Length: > 0 } localClientId)
-		{
-			currentSettings = currentSettings with { ClientId = localClientId };
-		}
-#endif
 		ApplySettingsToUi(currentSettings);
 		UpdateClientConfigSnippet();
 		isInitializing = false;
@@ -446,12 +436,4 @@ public sealed partial class MainWindow : Window
 			Application.Current.Exit();
 		}
 	}
-
-#if DEBUG
-	private static string? GetLocalDebugClientId() =>
-		typeof(MainWindow).Assembly
-			.GetCustomAttributes<AssemblyMetadataAttribute>()
-			.FirstOrDefault(a => a.Key == "LocalDebugClientId")?
-			.Value;
-#endif
 }

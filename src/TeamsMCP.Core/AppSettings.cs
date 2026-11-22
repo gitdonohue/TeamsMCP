@@ -5,8 +5,9 @@ public sealed record AppSettings
 	public const int MinPort = 1024;
 	public const int MaxPort = 65535;
 	public const int DefaultPort = 5123;
+	public const string DefaultClientId = "508ef684-c0c8-4101-8e76-c4046af418fe";
 
-	public string ClientId { get; init; } = string.Empty;
+	public string ClientId { get; init; } = DefaultClientId;
 	public string TenantId { get; init; } = string.Empty;
 	public int Port { get; init; } = DefaultPort;
 	public bool UseDeviceCode { get; init; } = true;
