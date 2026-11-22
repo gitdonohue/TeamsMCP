@@ -30,9 +30,9 @@ dotnet build src\TeamsMCP\TeamsMCP.csproj -p:Platform=x64 -p:Configuration=Relea
 ## Publishing to the Microsoft Store
 
 1. Reserve your app name in **Microsoft Partner Center** and associate the project in Visual Studio (**Project → Publish → Associate App with the Store**), or update `<Identity Name="..." Publisher="..." />` and `<PublisherDisplayName>` in `src/TeamsMCP/Package.appxmanifest` to match your Partner Center identity.
-2. Build an `.msixupload` bundle for `x64` and `ARM64` via Visual Studio (**Project → Publish → Create App Packages → Microsoft Store**) or MSBuild:
+2. Build an `.msixupload` bundle for `x64` and `ARM64` via Visual Studio (**Project → Publish → Create App Packages → Microsoft Store**) or 64-bit MSBuild:
    ```powershell
-   msbuild src\TeamsMCP\TeamsMCP.csproj /p:Configuration=Release /p:Platform=x64 /p:UapAppxPackageBuildMode=StoreUpload /p:AppxBundle=Always /p:AppxBundlePlatforms="x64|arm64"
+   msbuild src\TeamsMCP\TeamsMCP.csproj /restore /p:Configuration=Release /p:Platform=x64 /p:GenerateAppxPackageOnBuild=true /p:UapAppxPackageBuildMode=StoreUpload /p:AppxBundle=Always /p:AppxBundlePlatforms="x64|arm64"
    ```
 3. Run the **Windows App Certification Kit (WACK)** locally before submitting to Partner Center.
 

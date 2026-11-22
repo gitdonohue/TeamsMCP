@@ -18,7 +18,7 @@
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x64|arm64</AppxBundlePlatforms>
-    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <GenerateTemporaryStoreCertificate>False</GenerateTemporaryStoreCertificate>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>

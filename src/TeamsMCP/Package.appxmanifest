@@ -8,15 +8,15 @@
   IgnorableNamespaces="uap rescap desktop">
 
   <Identity
-    Name="gitdonohue.TeamsMCP"
-    Publisher="CN=gitdonohue"
+    Name="59501CharlesDonohue.TeamsMCP"
+    Publisher="CN=9A1D96C6-66E5-48DB-AC94-DFDB2DB1E541"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="d8a7e5c4-3b91-4f62-9e1a-5c2d8f0b3e71" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>TeamsMCP</DisplayName>
-    <PublisherDisplayName>gitdonohue</PublisherDisplayName>
+    <PublisherDisplayName>Charles Donohue</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -44,8 +44,8 @@
       </uap:VisualElements>
       <Extensions>
         <desktop:Extension Category="windows.startupTask"
-          Executable="$targetnametoken$.exe"
-          EntryPoint="$targetentrypoint$">
+          Executable="TeamsMCP.exe"
+          EntryPoint="Windows.FullTrustApplication">
           <desktop:StartupTask
             TaskId="TeamsMCPStartupTask"
             Enabled="false"
