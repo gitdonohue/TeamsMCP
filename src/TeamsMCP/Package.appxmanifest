@@ -10,7 +10,7 @@
   <Identity
     Name="59501CharlesDonohue.TeamsMCP"
     Publisher="CN=9A1D96C6-66E5-48DB-AC94-DFDB2DB1E541"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="d8a7e5c4-3b91-4f62-9e1a-5c2d8f0b3e71" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
